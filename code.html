@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Proposal</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(to bottom right, #ffcccc, #ffe6e6);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            max-height: 90vh;
+            width: 80%;
+        }
+        .container h1 {
+            font-size: 2.5em;
+            color: #cc0000;
+            margin-bottom: 20px;
+        }
+        .container p {
+            font-size: 1.2em;
+            color: #333;
+            margin: 20px 0;
+        }
+        .images {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .card {
+            width: 200px;
+            height: 200px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease-in-out;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card:hover img {
+            transform: scale(1.1);
+        }
+        /* Message Card that appears behind the image */
+        .message-card {
+            display: none; /* Hidden by default */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #cc0000;
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .button {
+            padding: 15px 25px;
+            font-size: 1.2em;
+            color: #fff;
+            background-color: #cc0000;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #b30000;
+        }
+        #no {
+            position: relative;
+        }
+        #qabool {
+            display: none;
+            font-size: 2em;
+            color: #cc0000;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>A Special Proposal</h1>
+        <p>
+            Dear Iqrar ki mama,
+        </p>
+        <p>
+            From the moment we met, you brought a warmth and light into my life that I never knew was missing.
+            Each of these moments captured in these pictures reminds me of how truly amazing you are.
+            Today, I want to ask you a very special question...will u be the one jiske paon k nechay iqrar ki jannat ho and the princess of my dreams?
+        </p>
+        <div class="images">
+            <div class="card" draggable="true" data-message="I love you">
+                <div class="message-card">I love you</div>
+                <img src="image1.jpg" alt="Image 1">
+            </div>
+            <div class="card" draggable="true" data-message="I miss you">
+                <div class="message-card">I miss you</div>
+                <img src="image2.jpg" alt="Image 2">
+            </div>
+            <div class="card" draggable="true" data-message="I hug you">
+                <div class="message-card">I hug you</div>
+                <img src="image3.jpg" alt="Image 3">
+            </div>
+            <div class="card" draggable="true" data-message="I kiss you">
+                <div class="message-card">I kiss you</div>
+                <img src="image4.jpg" alt="Image 4">
+            </div>
+            <div class="card" draggable="true" data-message="I marry you">
+                <div class="message-card">I marry you</div>
+                <img src="image5.jpg" alt="Image 5">
+            </div>
+        </div>
+        <div class="buttons">
+            <button id="yes" class="button" onclick="yes()">Yes</button>
+            <button id="no" class="button" onmouseover="moveNo()">No</button>
+        </div>
+        <p id="qabool">QABOOL HAI QABOOL HAI QABOOL HAI</p>
+    </div>
+
+    <script>
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('dragstart', dragStart);
+            card.addEventListener('dragend', dragEnd);
+            card.addEventListener('dragover', dragOver);
+            card.addEventListener('drop', drop);
+        });
+
+        function dragStart(event) {
+            // Show message card when dragging starts
+            const messageCard = event.target.querySelector('.message-card');
+            if (messageCard) {
+                messageCard.style.display = 'flex'; // Show the message
+            }
+            event.dataTransfer.setData('text/plain', event.target.outerHTML);
+            setTimeout(() => {
+                event.target.style.visibility = 'hidden'; // Hide the dragged image temporarily
+            }, 0);
+        }
+
+        function dragEnd(event) {
+            event.target.style.visibility = 'visible'; // Show the image again after dragging ends
+            const messageCard = event.target.querySelector('.message-card');
+            if (messageCard) {
+                messageCard.style.display = 'none'; // Hide the message card again
+            }
+        }
+
+        function dragOver(event) {
+            event.preventDefault(); // Allow dropping
+        }
+
+        function drop(event) {
+            event.preventDefault();
+            const data = event.dataTransfer.getData('text/plain');
+            const dropTarget = document.elementFromPoint(event.clientX, event.clientY);
+            if (dropTarget.classList.contains('card')) {
+                dropTarget.style.visibility = 'visible';
+                dropTarget.insertAdjacentHTML('beforeend', data); // Append dragged element
+                const messageCard = dropTarget.querySelector('.message-card');
+                if (messageCard) {
+                    messageCard.style.display = 'none'; // Hide the message card again
+                }
+            }
+        }
+
+        function moveNo() {
+            var noBtn = document.getElementById("no");
+            var x = Math.floor(Math.random() * (window.innerWidth - noBtn.clientWidth));
+            var y = Math.floor(Math.random() * (window.innerHeight - noBtn.clientHeight));
+            noBtn.style.transform = `translate(${x}px, ${y}px)`;
+        }
+
+        function yes() {
+            document.getElementById("qabool").style.display = "block";
+        }
+    </script>
+</body>
+</html>
+
